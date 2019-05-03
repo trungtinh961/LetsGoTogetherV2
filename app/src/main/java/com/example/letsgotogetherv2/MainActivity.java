@@ -1,5 +1,6 @@
 package com.example.letsgotogetherv2;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.ActionBar;
@@ -8,16 +9,20 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ActionBar toolbar;
-
+    FirebaseAuth mAuth;
     BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth   = FirebaseAuth.getInstance();
 
         toolbar = getSupportActionBar();
 
@@ -67,5 +72,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.custom_menu,menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuReload:
+                break;
+            case R.id.menuLogOut:
+                mAuth.signOut();
+                finish();
+                startActivity(new Intent(this,SignIn.class));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -195,6 +195,21 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:textSize="20sp" />
+            <TextView
+                android:gravity="end"
+                android:id="@+id/signup_tvShowPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="Ẩn/Hiện mật khẩu"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@+id/signin_btnSignin"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </LinearLayout>
 

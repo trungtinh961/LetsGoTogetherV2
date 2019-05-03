@@ -7,7 +7,7 @@
     android:background="@drawable/background"
     tools:context=".SignIn">
 
-    <AutoCompleteTextView
+    <EditText
         android:id="@+id/signin_edtUserName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:drawableLeft="@drawable/email"
         android:drawablePadding="12dp"
         android:ems="10"
-        android:hint="Tài khoản"
+        android:hint="Email"
         android:inputType="textEmailAddress"
         android:maxLines="1"
         android:singleLine="true"
@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <AutoCompleteTextView
+    <EditText
         android:id="@+id/signup_edtPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -141,31 +141,6 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/signin_btnSignin"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <!--<android.support.design.widget.TextInputLayout-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginLeft="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:layout_marginRight="8dp"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"-->
-        <!--app:passwordToggleEnabled="true">-->
-
-        <!--<EditText-->
-            <!--android:drawableLeft="@drawable/pass"-->
-            <!--android:drawablePadding="12dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:ems="10"-->
-            <!--android:hint="Mật khẩu"-->
-            <!--android:inputType="textPassword"-->
-            <!--android:textSize="20sp" />-->
-
-    <!--</android.support.design.widget.TextInputLayout>-->
 
     <CheckBox
         android:id="@+id/signin_cbSave"
