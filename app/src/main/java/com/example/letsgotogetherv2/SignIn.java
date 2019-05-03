@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class SignIn extends AppCompatActivity {
 
     TextView tvSignUp;
@@ -29,6 +32,12 @@ public class SignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
+        // Write a message to the database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
 
         Anhxa();
 
@@ -95,7 +104,7 @@ public class SignIn extends AppCompatActivity {
         cbSave      = (CheckBox)                findViewById(R.id.signin_cbSave);
         tvSignUp    = (TextView)                findViewById(R.id.signin_tvSignUp);
         btnLogin    = (Button)                  findViewById(R.id.signin_btnSignin);
-        edtpassword    = (AutoCompleteTextView)    findViewById(R.id.signin_edtPassword);
+        edtpassword    = (AutoCompleteTextView)    findViewById(R.id.signup_edtPassword);
         edtuserName    = (AutoCompleteTextView)    findViewById(R.id.signin_edtUserName);
         showPass    = (TextView)                findViewById(R.id.signin_tvShowPassword);
     }

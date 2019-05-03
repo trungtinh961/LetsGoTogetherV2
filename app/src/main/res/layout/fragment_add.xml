@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Add"
+    tools:context=".fragment_add"
     android:background="@drawable/background">
 
     <!-- TODO: Update blank fragment layout -->
