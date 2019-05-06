@@ -44,7 +44,7 @@ public class fragment_user extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private  String userID;
-    Account account;
+    static public Account account;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,39 +105,17 @@ public class fragment_user extends Fragment {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    Toast.makeText(getActivity(), "Successfully signed in with: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
-                    Toast.makeText(getActivity(), "Successfully signed out.", Toast.LENGTH_SHORT).show();
+
                 }
             }
         };
 
         return view;
     }
-
-//    private void showData(DataSnapshot dataSnapshot) {
-//
-//        for(DataSnapshot ds : dataSnapshot.getChildren()){
-//            Account account = new Account();
-//            account.setName(ds.child(userID).getValue(Account.class).getName()); //set the name
-//            account.setEmail(ds.child(userID).getValue(Account.class).getEmail()); //set the email
-//            account.setPhone(ds.child(userID).getValue(Account.class).getPhone()); //set the phone_num
-//            account.setAddress(ds.child(userID).getValue(Account.class).getAddress()); //set the address
-//
-//            //display all the information
-//            Log.d(TAG, "showData: name: " + account.getName());
-//            Log.d(TAG, "showData: email: " + account.getEmail());
-//            Log.d(TAG, "showData: phone_num: " + account.getPhone());
-//            Log.d(TAG, "showData: address: " + account.getAddress());
-//
-//            tvName.setText("Tên: "+ account.getName());
-//            tvEmail.setText("Email: "+ account.getEmail());
-//            tvPhone.setText("SĐT: "+ account.getPhone());
-//            tvAddress.setText("Địa chỉ: "+ account.getAddress());
-//        }
-//    }
 
     @Override
     public void onStart() {
