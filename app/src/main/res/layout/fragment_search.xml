@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment_search"
+    tools:context=".layout.fragment_search"
     android:background="@drawable/background">
 
     <!-- TODO: Update blank fragment layout -->
@@ -78,10 +78,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_btnSearch"></ListView>
 
-    <EditText
-        android:textSize="18sp"
-        android:drawableLeft="@drawable/date"
-        android:drawablePadding="12dp"
+    <TextView
         android:id="@+id/search_edtDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -90,9 +87,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:drawableLeft="@drawable/date"
+        android:drawablePadding="12dp"
         android:ems="10"
-        android:hint="Ngày"
-        android:inputType="textPersonName"
+        android:hint="Chọn ngày"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_edtTo" />

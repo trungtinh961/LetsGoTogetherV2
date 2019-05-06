@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2;
+package com.example.letsgotogetherv2.layout;
 
 
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.letsgotogetherv2.R;
 
 
 /**
@@ -14,7 +17,8 @@ import android.widget.EditText;
  */
 public class fragment_add extends Fragment {
 
-    EditText edtFrom, edtTo, edtDate, edtTime;
+    EditText edtFrom, edtTo;
+    TextView edtDate, edtTime;
 
     public fragment_add() {
         // Required empty public constructor
@@ -26,8 +30,8 @@ public class fragment_add extends Fragment {
 
         edtFrom = (EditText) view.findViewById(R.id.add_edtFrom);
         edtTo   = (EditText) view.findViewById(R.id.add_edtTo);
-        edtDate = (EditText) view.findViewById(R.id.add_edtDate);
-        edtTime = (EditText) view.findViewById(R.id.add_edtTime);
+        edtDate = (TextView) view.findViewById(R.id.add_edtDate);
+        edtTime = (TextView) view.findViewById(R.id.add_edtTime);
 
         edtDate.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2;
+package com.example.letsgotogetherv2.model;
 
 /**
  * Created by Trung Tinh on 4/25/2019.

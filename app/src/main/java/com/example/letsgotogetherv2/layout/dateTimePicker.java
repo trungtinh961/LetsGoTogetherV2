@@ -1,10 +1,11 @@
-package com.example.letsgotogetherv2;
+package com.example.letsgotogetherv2.layout;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
@@ -14,7 +15,7 @@ import java.util.Calendar;
  * Created by Trung Tinh on 4/19/2019.
  */
 public class dateTimePicker {
-    public static void chooseDate(Context context, final EditText editText){
+    public static void chooseDate(Context context, final TextView editText){
         final Calendar calendar = Calendar.getInstance();
         int date = calendar.get(Calendar.DATE);
         int month = calendar.get(Calendar.MONTH);
@@ -30,7 +31,7 @@ public class dateTimePicker {
         datePickerDialog.show();
     }
 
-    public  static void chooseTime(Context context, final EditText editText){
+    public  static void chooseTime(Context context, final TextView editText){
         final Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);

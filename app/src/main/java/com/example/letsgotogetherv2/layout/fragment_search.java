@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2;
+package com.example.letsgotogetherv2.layout;
 
 
 import android.os.Bundle;
@@ -7,6 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.letsgotogetherv2.R;
+
+import javax.xml.transform.Templates;
 
 
 /**
@@ -14,7 +19,8 @@ import android.widget.EditText;
  */
 public class fragment_search extends Fragment {
 
-    EditText edtFrom, edtTo, edtDate;
+    EditText edtFrom, edtTo;
+    TextView edtDate;
 
     public fragment_search() {
         // Required empty public constructor
@@ -27,7 +33,7 @@ public class fragment_search extends Fragment {
 
         edtFrom = (EditText) view.findViewById(R.id.search_edtFrom);
         edtTo   = (EditText) view.findViewById(R.id.search_edtTo);
-        edtDate = (EditText) view.findViewById(R.id.search_edtDate);
+        edtDate = (TextView) view.findViewById(R.id.search_edtDate);
 
         edtDate.setOnClickListener(new View.OnClickListener() {
             @Override

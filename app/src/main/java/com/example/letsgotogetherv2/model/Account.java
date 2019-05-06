@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2;
+package com.example.letsgotogetherv2.model;
 
 import java.util.ArrayList;
 
@@ -6,16 +6,16 @@ import java.util.ArrayList;
  * Created by Trung Tinh on 4/25/2019.
  */
 public class Account {
-    private int accountID;
-    private String name, email, phone, adress;
+    private String name, email, phone, address;
     private ArrayList<Trip> tripArrayList;
 
-    public Account(String name, String email, String phone, String adress) {
+    public Account(){}
+
+    public Account(String name, String email, String phone, String address) {
         this.name = name;
         this.email = email;
         this.phone = phone;
-        this.adress = adress;
-        this.accountID = (name+phone).hashCode();
+        this.address = address;
         this.tripArrayList = new ArrayList<>();
     }
 
@@ -43,20 +43,20 @@ public class Account {
         this.phone = phone;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public ArrayList<Trip> getTripArrayList() {
         return tripArrayList;
     }
 
-    public int getAccountID() {
-        return accountID;
+    public void setTripArrayList(ArrayList<Trip> tripArrayList) {
+        this.tripArrayList = tripArrayList;
     }
 
     public void bookTrip(String from, String to, String date, String time, Boolean driver) {
@@ -69,11 +69,3 @@ public class Account {
     }
 }
 
-class Admin extends Account{
-
-    public Admin(String name, String email, String phone, String adress) {
-        super(name, email, phone, adress);
-    }
-
-
-}

@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2;
+package com.example.letsgotogetherv2.layout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,13 +10,13 @@ import android.os.Bundle;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.letsgotogetherv2.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,7 +33,7 @@ public class SignIn extends AppCompatActivity {
     CheckBox cbSave;
     private ActionBar toolbar;
     FirebaseAuth mAuth;
-    DatabaseReference mDatebase;
+    DatabaseReference mDatabase;
     ProgressDialog progressDialog;
     SharedPreferences sharedPreferences;
     boolean showPassFlag = false;
@@ -59,7 +59,9 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignIn.this, SignUp.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
         /* Chuyển activity SignIn -> Main nếu đăng nhập thành công*/
@@ -117,7 +119,9 @@ public class SignIn extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(SignIn.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignIn.this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             progressDialog.dismiss();
@@ -137,6 +141,6 @@ public class SignIn extends AppCompatActivity {
         toolbar         = getSupportActionBar();
         progressDialog  = new ProgressDialog(this);
         mAuth           = FirebaseAuth.getInstance();
-        mDatebase       = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabase       = FirebaseDatabase.getInstance().getReference().child("Users");
     }
 }
