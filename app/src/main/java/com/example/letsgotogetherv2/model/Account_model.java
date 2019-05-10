@@ -5,13 +5,13 @@ import java.util.ArrayList;
 /**
  * Created by Trung Tinh on 4/25/2019.
  */
-public class Account {
+public class Account_model {
     private String name, email, phone, address;
     private ArrayList<Trip> tripArrayList;
 
-    public Account(){}
+    public Account_model(){}
 
-    public Account(String name, String email, String phone, String address) {
+    public Account_model(String name, String email, String phone, String address) {
         this.name = name;
         this.email = email;
         this.phone = phone;

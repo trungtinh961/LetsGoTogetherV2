@@ -1,22 +1,18 @@
 package com.example.letsgotogetherv2.layout;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.letsgotogetherv2.R;
-import com.example.letsgotogetherv2.model.Account;
+import com.example.letsgotogetherv2.model.Account_model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +40,7 @@ public class fragment_user extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private  String userID;
-    static public Account account;
+    static public Account_model accountModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,12 +82,12 @@ public class fragment_user extends Fragment {
                 Log.d("VALUE","Phone: "+ phone);
                 Log.d("VALUE","Address: "+ address);
 
-                account = new Account(name,email,phone,address);
+                accountModel = new Account_model(name,email,phone,address);
 
-                tvName.setText(account.getName());
-                tvEmail.setText(account.getEmail());
-                tvPhone.setText(account.getPhone());
-                tvAddress.setText(account.getAddress());
+                tvName.setText(accountModel.getName());
+                tvEmail.setText(accountModel.getEmail());
+                tvPhone.setText(accountModel.getPhone());
+                tvAddress.setText(accountModel.getAddress());
             }
 
             @Override
