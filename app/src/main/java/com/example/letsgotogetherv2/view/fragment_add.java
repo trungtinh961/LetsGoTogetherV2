@@ -16,12 +16,14 @@ import android.widget.Toast;
 
 import com.example.letsgotogetherv2.R;
 import com.example.letsgotogetherv2.model.Trip;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -37,12 +39,12 @@ public class fragment_add extends Fragment {
     RadioGroup radioGroup;
 
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    DatabaseReference mDatebase;
     FirebaseUser user = mAuth.getCurrentUser();
     String userID = user.getUid();
 
     private FirebaseFirestore db;
     private DocumentReference mRef;
+    Task<Void> nRef;
 
     public fragment_add() {
         // Required empty public constructor
@@ -96,9 +98,8 @@ public class fragment_add extends Fragment {
                     mRef.set(new Trip(tripID,from,to,date,time,rdDriver.isChecked()));
 
                     /* Thêm tripID vào current User */
-                    mDatebase = FirebaseDatabase.getInstance().getReference().child("Users");
-                    DatabaseReference currentUser = mDatebase.child(userID).child("tripLists");
-                    currentUser.setValue(tripID);
+                    nRef = db.collection("users").document(userID)
+                            .update("tripArrayList", FieldValue.arrayUnion(tripID));
 
                     Toast.makeText(getActivity(), "Thêm chuyến thành công!", Toast.LENGTH_SHORT).show();
 

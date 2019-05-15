@@ -130,7 +130,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginBottom="8dp"
-            android:text="Cần đi"
+            android:text="Khách"
             app:layout_constraintBottom_toTopOf="@+id/add_btnAdd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.49"
@@ -143,7 +143,7 @@
             android:layout_marginStart="64dp"
             android:layout_marginLeft="64dp"
             android:layout_marginBottom="8dp"
-            android:text="Cần chở"
+            android:text="Tài xế"
             app:layout_constraintBottom_toTopOf="@+id/add_btnAdd"
             app:layout_constraintStart_toStartOf="parent" />
 
