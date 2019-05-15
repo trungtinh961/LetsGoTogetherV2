@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".layout.MainActivity">
+    tools:context=".view.MainActivity"
+    android:id="@+id/activityMain">
 
     <FrameLayout
         android:id="@+id/container"
@@ -26,7 +27,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         app:itemIconTint="@drawable/item_selected"
-        app:itemTextColor="@drawable/item_selected">
+        app:itemTextColor="@drawable/item_selected"
+        app:labelVisibilityMode="unlabeled">
 
     </android.support.design.widget.BottomNavigationView>
 

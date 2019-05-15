@@ -5,13 +5,13 @@ import java.util.ArrayList;
 /**
  * Created by Trung Tinh on 4/25/2019.
  */
-public class Account {
+public class User {
     private String name, email, phone, address;
-    private ArrayList<Trip> tripArrayList;
+    private ArrayList<String> tripArrayList;
 
-    public Account(){}
+    public User(){}
 
-    public Account(String name, String email, String phone, String address) {
+    public User(String name, String email, String phone, String address) {
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -51,21 +51,21 @@ public class Account {
         this.address = address;
     }
 
-    public ArrayList<Trip> getTripArrayList() {
+    public ArrayList<String> getTripArrayList() {
         return tripArrayList;
     }
 
-    public void setTripArrayList(ArrayList<Trip> tripArrayList) {
+    public void setTripArrayList(ArrayList<String> tripArrayList) {
         this.tripArrayList = tripArrayList;
     }
 
-    public void bookTrip(String from, String to, String date, String time, Boolean driver) {
-        Trip trip = new Trip(from,to,date,time,driver);
-        tripArrayList.add(trip);
+    public void bookTrip(String tripID) {
+        this.tripArrayList.add(tripID);
     }
 
-    public void deleteTrip(Trip trip){
-        tripArrayList.remove(trip);
+    public void deleteTrip(String tripID){
+        tripArrayList.remove(tripID);
     }
+
 }
 

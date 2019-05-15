@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".layout.fragment_add"
+    tools:context=".view.fragment_add"
     android:background="@drawable/background">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <AutoCompleteTextView
+    <EditText
         android:id="@+id/add_edtFrom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,7 +18,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:drawableLeft="@drawable/bike"
         android:drawablePadding="12dp"
         android:ems="10"
@@ -30,9 +29,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
-    <AutoCompleteTextView
-        android:drawableLeft="@drawable/bike"
-        android:drawablePadding="12dp"
+    <EditText
         android:id="@+id/add_edtTo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -40,50 +37,60 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:drawableLeft="@drawable/bike"
+        android:drawablePadding="12dp"
         android:ems="10"
         android:hint="Điểm đến"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/add_edtDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/add_edtDate"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:drawableLeft="@drawable/date"
-        android:drawablePadding="12dp"
-        android:ems="10"
-        android:hint="Chọn ngày"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/add_edtTime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/add_edtTime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:drawableLeft="@drawable/time"
-        android:drawablePadding="12dp"
-        android:ems="10"
-        android:hint="Chọn giờ"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/add_radioGroup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/add_edtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_login"
+            android:ems="10"
+            android:gravity="center"
+            android:text="Chọn ngày"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/add_edtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_login"
+            android:ems="10"
+            android:gravity="center"
+            android:text="Chọn giờ"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/add_btnAdd"
@@ -101,14 +108,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <RadioGroup
-        android:id="@+id/radioGroup"
+        android:id="@+id/add_radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/add_btnAdd"
         app:layout_constraintEnd_toEndOf="parent"

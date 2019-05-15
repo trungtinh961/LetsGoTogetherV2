@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2.layout;
+package com.example.letsgotogetherv2.view;
 
 
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.letsgotogetherv2.R;
-
-import javax.xml.transform.Templates;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
@@ -21,6 +21,8 @@ public class fragment_search extends Fragment {
 
     EditText edtFrom, edtTo;
     TextView edtDate;
+    private FirebaseAuth mAuth;
+    private  String userID;
 
     public fragment_search() {
         // Required empty public constructor
@@ -30,6 +32,10 @@ public class fragment_search extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
 
         edtFrom = (EditText) view.findViewById(R.id.search_edtFrom);
         edtTo   = (EditText) view.findViewById(R.id.search_edtTo);

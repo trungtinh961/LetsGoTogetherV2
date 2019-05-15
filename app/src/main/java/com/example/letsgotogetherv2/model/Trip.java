@@ -4,19 +4,21 @@ package com.example.letsgotogetherv2.model;
  * Created by Trung Tinh on 4/25/2019.
  */
 public class Trip {
-    private int tripID;
+    private String userID;
+    private String tripID;
     private String from, to, date, time;
     private Boolean driver;
 
-    public int getTripID() {
+    public String getTripID() {
         return tripID;
     }
 
-    public void setTripID(int tripID) {
+    public void setTripID(String tripID) {
         this.tripID = tripID;
     }
 
-    public Trip(String from, String to, String date, String time, Boolean driver) {
+    public Trip(String tripID, String from, String to, String date, String time, Boolean driver) {
+        this.tripID = tripID;
         this.from = from;
         this.to = to;
         this.date = date;

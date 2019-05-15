@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2.layout;
+package com.example.letsgotogetherv2.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -59,37 +60,39 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignIn.this, SignUp.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                finish();
             }
         });
         /* Chuyển activity SignIn -> Main nếu đăng nhập thành công*/
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Đang đăng nhập...");
-                progressDialog.show();
 
-                String email = edtuserName.getText().toString().trim();
-                String password = edtpassword.getText().toString().trim();
+                String email = edtuserName.getText().toString();
+                String password = edtpassword.getText().toString();
 
-                /* save username, password */
-                if (cbSave.isChecked()){
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("email",email);
-                    editor.putString("password",password);
-                    editor.putBoolean("cbCheck",true);
-                    editor.commit();
+                if (email.equals("") && password.equals("")) {
+                    Toast.makeText(SignIn.this, "Điền đầy đủ thông tin dùm bạn ơi! ^^", Toast.LENGTH_SHORT).show();
                 } else {
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.remove("email");
-                    editor.remove("password");
-                    editor.remove("cbCheck");
-                    editor.commit();
-                }
+                    progressDialog.setMessage("Đang đăng nhập...");
+                    progressDialog.show();
 
-                startLogin(email, password);
+                    /* save username, password */
+                    if (cbSave.isChecked()){
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("email",email);
+                        editor.putString("password",password);
+                        editor.putBoolean("cbCheck",true);
+                        editor.commit();
+                    } else {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.remove("email");
+                        editor.remove("password");
+                        editor.remove("cbCheck");
+                        editor.commit();
+                    }
+                    startLogin(email, password);
+                }
             }
         });
 
@@ -119,9 +122,7 @@ public class SignIn extends AppCompatActivity {
                             progressDialog.dismiss();
                             Toast.makeText(SignIn.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignIn.this, MainActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
-                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                             progressDialog.dismiss();

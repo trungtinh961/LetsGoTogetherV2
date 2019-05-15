@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2.layout;
+package com.example.letsgotogetherv2.view;
 
 
 import android.os.Bundle;

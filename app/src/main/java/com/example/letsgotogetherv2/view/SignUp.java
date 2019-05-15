@@ -1,4 +1,4 @@
-package com.example.letsgotogetherv2.layout;
+package com.example.letsgotogetherv2.view;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,18 +16,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.letsgotogetherv2.R;
+import com.example.letsgotogetherv2.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUp extends AppCompatActivity {
 
     private ActionBar toolbar;
+
     FirebaseAuth mAuth;
-    DatabaseReference mDatebase;
+    private FirebaseFirestore db;
+    private DocumentReference mRef;
+
     ProgressDialog progressDialog;
     boolean showPassFlag = false;
     TextView tvSignIn, tvShowPass;
@@ -90,7 +96,6 @@ public class SignUp extends AppCompatActivity {
         toolbar         = getSupportActionBar();
         progressDialog  = new ProgressDialog(this);
         mAuth           = FirebaseAuth.getInstance();
-        mDatebase       = FirebaseDatabase.getInstance().getReference().child("Users");
     }
 
     private void startRegister() {
@@ -101,24 +106,22 @@ public class SignUp extends AppCompatActivity {
         final String phone        = edtPhone.getText().toString();
         final String email        = edtMail.getText().toString();
         final String address      = edtAddress.getText().toString();
-        String pass         = edtPass.getText().toString();
-        String confirmPass  = edtConfirmPass.getText().toString();
+        String pass               = edtPass.getText().toString();
+        String confirmPass        = edtConfirmPass.getText().toString();
 
-        if(!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(address)
-                    && !TextUtils.isEmpty(pass) && !TextUtils.isEmpty(confirmPass)){
+        if(!name.equals("") && !phone.equals("") && !email.equals("") && !address.equals("")
+                    && !pass.equals("") && !confirmPass.equals("")){
             if (pass.equals(confirmPass)){
-
                 mAuth.createUserWithEmailAndPassword(email, pass)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
                                     String uid = mAuth.getCurrentUser().getUid();
-                                    DatabaseReference currentUser = mDatebase.child(uid);
-                                    currentUser.child("Name").setValue(name);
-                                    currentUser.child("Phone").setValue(phone);
-                                    currentUser.child("Email").setValue(email);
-                                    currentUser.child("Address").setValue(address);
+
+                                    db = FirebaseFirestore.getInstance();
+                                    mRef = db.collection("users").document(uid);
+                                    mRef.set(new User(name, email, phone, address));
 
                                     Toast.makeText(SignUp.this, "Đăng kí thành công!", Toast.LENGTH_SHORT).show();
                                     progressDialog.dismiss();
