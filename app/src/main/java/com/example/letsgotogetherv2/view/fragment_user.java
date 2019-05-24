@@ -61,7 +61,7 @@ public class fragment_user extends Fragment {
         tvAddress    = (TextView) view.findViewById(R.id.user_tvAddress);
         tvManageTrip = (TextView) view.findViewById(R.id.user_tvManage);
         tvChangePass = (TextView) view.findViewById(R.id.user_tvChangePassword);
-        tvResponse   = (TextView) view.findViewById(R.id.user_tvResponse);
+       // tvResponse   = (TextView) view.findViewById(R.id.user_tvResponse);
 
         //-----------------------------------------------------------------------
         mAuth = FirebaseAuth.getInstance();
@@ -80,6 +80,8 @@ public class fragment_user extends Fragment {
                             Log.d("VALUE", "Email: " + user.getEmail());
                             Log.d("VALUE", "Phone: " + user.getPhone());
                             Log.d("VALUE", "Address: " + user.getAddress());
+                            Log.d("VALUE", "Listsize" + user.getTripArrayList().size());
+
 
                             tvName.setText(user.getName());
                             tvEmail.setText(user.getEmail());

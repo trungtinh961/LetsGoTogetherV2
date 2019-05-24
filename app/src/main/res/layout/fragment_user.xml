@@ -36,6 +36,7 @@
                 android:gravity="center"
                 android:text=""
                 android:textSize="35sp"
+                android:textColor="@android:color/black"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/user_tvPhone"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,6 +51,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:textColor="@android:color/black"
                 android:layout_marginBottom="8dp"
                 android:drawableLeft="@drawable/phone"
                 android:drawablePadding="12dp"
@@ -64,6 +66,7 @@
                 android:id="@+id/user_tvEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
@@ -86,32 +89,15 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
+                android:textColor="@android:color/black"
                 android:drawableLeft="@drawable/password_reset"
                 android:drawablePadding="12dp"
                 android:text="Đổi mật khẩu"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toTopOf="@+id/user_tvResponse"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/user_tvResponse"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                android:drawableLeft="@drawable/response"
-                android:drawablePadding="12dp"
-                android:text="Phản hồi"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView6"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
@@ -122,6 +108,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:textColor="@android:color/black"
                 android:layout_marginBottom="8dp"
                 android:drawableLeft="@drawable/manage"
                 android:drawablePadding="12dp"
@@ -129,20 +116,7 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/user_tvChangePassword"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="Mẹo: nhấp và giữ vào các trường họ tên, số điện thoại, email, mật khẩu để thay đổi chúng!"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
@@ -157,6 +131,7 @@
                 android:drawableLeft="@drawable/address"
                 android:drawablePadding="12dp"
                 android:text=""
+                android:textColor="@android:color/black"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/user_tvManage"
                 app:layout_constraintEnd_toEndOf="@+id/user_tvEmail"

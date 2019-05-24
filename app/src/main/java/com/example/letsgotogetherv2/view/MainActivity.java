@@ -50,13 +50,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         switch (menuItem.getItemId()){
             case R.id.navigation_home:
                 getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.container, fragmentHome).commit();
-                toolbar.setTitle("Trang chủ");
+                toolbar.setTitle("Danh sách chuyến");
                 return true;
 
-            case R.id.navigation_search:
-                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.container, fragmentSearch).commit();
-                toolbar.setTitle("Tìm kiếm chuyến");
-                return true;
+//            case R.id.navigation_search:
+//                getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.container, fragmentSearch).commit();
+//                toolbar.setTitle("Tìm kiếm chuyến");
+//                return true;
 
             case R.id.navigation_user:
                 getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.fade_in,R.anim.fade_out).replace(R.id.container, fragmentUser).commit();
@@ -81,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.menuReload:
-                break;
+//            case R.id.menuReload:
+//                break;
             case R.id.menuLogOut:
                 mAuth.signOut();
                 finish();
