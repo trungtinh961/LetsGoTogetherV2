@@ -5,15 +5,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.letsgotogetherv2.R;
 import com.example.letsgotogetherv2.model.Trip;
+import com.example.letsgotogetherv2.model.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -57,6 +65,7 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvFrom, tvTo, tvDate, tvTime, tvDriver;
+        Button btnChoose;
 
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
@@ -66,19 +75,14 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
             tvDate  = (TextView) itemView.findViewById(R.id.customtrip_tvDate);
             tvTime  = (TextView) itemView.findViewById(R.id.customtrip_tvTime);
             tvDriver = (TextView) itemView.findViewById(R.id.customtrip_tvDriver);
+            btnChoose = (Button) itemView.findViewById(R.id.recycle_btnChoose);
 
-            //------------- User chọn chuyến -------------------------------------------------
-            itemView.setOnClickListener(new View.OnClickListener() {
+
+            //------ User chọn chuyến -----------------------
+            btnChoose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(itemView.getContext(), ""+getAdapterPosition(), Toast.LENGTH_SHORT).show();
-
-                    Trip trip = tripArrayList.get(getAdapterPosition());
-
-                    trip.setChoose(true);
-                    trip.setPartnerID(partnerID);
-                    confirmChoose(itemView);
-
+                    confirmChoose(itemView,getAdapterPosition());
                 }
             });
 
@@ -86,8 +90,11 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
         }
     }
 
-    public void confirmChoose(View itemView){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(itemView.getContext());
+    public void confirmChoose(final View itemView, final int position){
+
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(itemView.getContext());
         alertDialog.setTitle("Thông báo!");
         alertDialog.setMessage("Bạn có muốn chọn chuyến này không?");
 
@@ -95,18 +102,50 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                Trip trip = tripArrayList.get(position);
+                trip.setChoose(true);
+                trip.setPartnerID(partnerID);
+
+                // 1. Cập nhật lại trip hiện tại.
+                db.collection("trips").document(trip.getTripID()).set(trip);
+
+                // 2. Cập nhật thông tin trip của user tạo nó.
+                db.collection("users").document(trip.getUserID())
+                        .update("tripArrayList", FieldValue.arrayRemove(trip.getTripID()));
+
+                // 3. Show thông tin người tạo chuyến đi.
+                dialog.cancel();
+                final AlertDialog.Builder alertDialog1 = new AlertDialog.Builder(itemView.getContext());
+                alertDialog1.setTitle("Thông tin đối tác của bạn:");
+
+                db.collection("users").document(trip.getUserID()).get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        User user = documentSnapshot.toObject(User.class);
+
+                        if (user != null) {
+                            alertDialog1.setMessage("Tên: " + user.getName() +
+                                    "\nSĐT: " + user.getPhone());
+                        } else {
+                            Log.d("VALUE", "NULL");
+                        }
+
+                    }
+                });
+                alertDialog1.show();
             }
         });
 
         alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                dialog.cancel();
             }
         });
 
-        alertDialog.create().show();
+        alertDialog.show();
     }
-
 }
 

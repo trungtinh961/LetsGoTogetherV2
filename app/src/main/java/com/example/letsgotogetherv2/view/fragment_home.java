@@ -40,8 +40,6 @@ public class fragment_home extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference mRef = db.collection("trips");
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,8 +66,9 @@ public class fragment_home extends Fragment {
                 for (QueryDocumentSnapshot documentSnapshots: queryDocumentSnapshots){
                     Trip trip = documentSnapshots.toObject(Trip.class);
 
-                    arrayList.add(trip);
-
+                    if (trip.getChoose() == false){
+                        arrayList.add(trip);
+                    }
                 }
                 tripAdapter tripAdapter = new tripAdapter(arrayList,getContext());
                 recyclerView.setAdapter(tripAdapter);
