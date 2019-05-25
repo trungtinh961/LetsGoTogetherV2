@@ -7,15 +7,7 @@ public class Trip {
     private String userID, partnerID;
     private String tripID;
     private String from, to, date, time;
-    private Boolean driver;
-
-    public String getTripID() {
-        return tripID;
-    }
-
-    public void setTripID(String tripID) {
-        this.tripID = tripID;
-    }
+    private Boolean driver, isChoose;
 
     public Trip() {}
 
@@ -27,14 +19,40 @@ public class Trip {
         this.date = date;
         this.time = time;
         this.driver = driver;
+        this.isChoose = false;
+        this.partnerID = "";
     }
 
-    public Trip(String from, String to, String date, String time, Boolean driver) {
-        this.from = from;
-        this.to = to;
-        this.date = date;
-        this.time = time;
-        this.driver = driver;
+    public Boolean getChoose() {
+        return isChoose;
+    }
+
+    public void setChoose(Boolean choose) {
+        isChoose = choose;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getPartnerID() {
+        return partnerID;
+    }
+
+    public void setPartnerID(String partnerID) {
+        this.partnerID = partnerID;
+    }
+
+    public String getTripID() {
+        return tripID;
+    }
+
+    public void setTripID(String tripID) {
+        this.tripID = tripID;
     }
 
     public String getFrom() {

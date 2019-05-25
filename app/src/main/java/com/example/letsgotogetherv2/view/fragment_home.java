@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.letsgotogetherv2.R;
 import com.example.letsgotogetherv2.adapter.tripAdapter;
@@ -39,13 +40,14 @@ public class fragment_home extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     CollectionReference mRef = db.collection("trips");
 
-    ArrayList<Trip> arrayList = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_home, container, false);
+
         initView();
         return view;
     }
@@ -59,10 +61,7 @@ public class fragment_home extends Fragment {
         recyclerView.addItemDecoration(dividerItemDecoration);
 
         //----------------------
-
-//        arrayList.add(new Trip("khu a", "khu b", "25/5", "16h", true));
-//        arrayList.add(new Trip("khu b", "khu a", "30/5", "20h", false));
-
+        final ArrayList<Trip> arrayList = new ArrayList<>();
         mRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -71,10 +70,11 @@ public class fragment_home extends Fragment {
 
                     arrayList.add(trip);
 
-
                 }
                 tripAdapter tripAdapter = new tripAdapter(arrayList,getContext());
                 recyclerView.setAdapter(tripAdapter);
+
+
             }
         });
 

@@ -1,15 +1,20 @@
 package com.example.letsgotogetherv2.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.letsgotogetherv2.R;
 import com.example.letsgotogetherv2.model.Trip;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -20,6 +25,7 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
 
     ArrayList<Trip> tripArrayList;
     Context context;
+    String partnerID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
     public tripAdapter(ArrayList<Trip> tripArrayList, Context context) {
         this.tripArrayList = tripArrayList;
@@ -48,11 +54,11 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
         return tripArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvFrom, tvTo, tvDate, tvTime, tvDriver;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull final View itemView) {
             super(itemView);
 
             tvFrom  = (TextView) itemView.findViewById(R.id.customtrip_tvFrom);
@@ -60,7 +66,47 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
             tvDate  = (TextView) itemView.findViewById(R.id.customtrip_tvDate);
             tvTime  = (TextView) itemView.findViewById(R.id.customtrip_tvTime);
             tvDriver = (TextView) itemView.findViewById(R.id.customtrip_tvDriver);
+
+            //------------- User chọn chuyến -------------------------------------------------
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(itemView.getContext(), ""+getAdapterPosition(), Toast.LENGTH_SHORT).show();
+
+                    Trip trip = tripArrayList.get(getAdapterPosition());
+
+                    trip.setChoose(true);
+                    trip.setPartnerID(partnerID);
+                    confirmChoose(itemView);
+
+                }
+            });
+
+            //-------------------------------------------------------------------------------
         }
     }
 
+    public void confirmChoose(View itemView){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(itemView.getContext());
+        alertDialog.setTitle("Thông báo!");
+        alertDialog.setMessage("Bạn có muốn chọn chuyến này không?");
+
+        alertDialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        alertDialog.create().show();
+    }
+
 }
+

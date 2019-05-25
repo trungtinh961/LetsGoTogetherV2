@@ -109,7 +109,12 @@ public class fragment_add extends Fragment {
 
                                 mRef = db.collection("trips").document();
                                 String tripID = mRef.getId();
-                                mRef.set(new Trip(userID,tripID,from,to,date,time,rdDriver.isChecked()));
+                                Trip trip = (new Trip(userID,tripID,from,to,date,time,rdDriver.isChecked()));
+
+                                mRef.set(trip);
+
+                                Log.d("userID", trip.getUserID()+"");
+                                Log.d("tripID", trip.getTripID()+"");
 
                                 /* Thêm tripID vào current User */
                                 nRef = db.collection("users").document(userID)
