@@ -11,9 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity
-            android:name=".view.choose_trip_success"
-            android:theme="@android:style/Theme.Holo.Dialog" />
         <activity android:name=".view.MainActivity" />
         <activity android:name=".view.SignUp" />
         <activity android:name=".view.SignIn">

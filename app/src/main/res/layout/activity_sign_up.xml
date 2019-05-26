@@ -92,7 +92,7 @@
                 android:drawablePadding="12dp"
                 android:ems="10"
                 android:hint="Nhập họ tên"
-                android:inputType="textPersonName"
+                android:inputType="textCapWords"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/signup_edtPhone"
                 app:layout_constraintEnd_toEndOf="parent"

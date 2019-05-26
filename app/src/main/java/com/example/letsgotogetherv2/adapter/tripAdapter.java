@@ -1,6 +1,7 @@
 package com.example.letsgotogetherv2.adapter;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +20,8 @@ import android.widget.Toast;
 import com.example.letsgotogetherv2.R;
 import com.example.letsgotogetherv2.model.Trip;
 import com.example.letsgotogetherv2.model.User;
-import com.example.letsgotogetherv2.view.choose_trip_success;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -132,14 +131,8 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
                         User user = documentSnapshot.toObject(User.class);
 
                         if (user != null) {
-                            Intent intent = new Intent(itemView.getContext(), choose_trip_success.class);
 
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("trip",trip);
-                            bundle.putSerializable("user",user);
-                            intent.putExtra("data",bundle);
-
-                            itemView.getContext().startActivity(intent);
+                            dialogTrip(itemView, trip, user);
 
                         } else {
                             Log.d("VALUE", "NULL");
@@ -158,6 +151,36 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
         });
 
         alertDialog.show();
+    }
+
+    public void dialogTrip(View itemView, Trip trip, User user){
+        final Dialog dialog = new Dialog(itemView.getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.activity_choose_trip_success);
+        dialog.setCanceledOnTouchOutside(false);
+
+        TextView tvTrip = dialog.findViewById(R.id.success_trip);
+        TextView tvUser = dialog.findViewById(R.id.success_user);
+        TextView btnOK = dialog.findViewById(R.id.success_btnOK);
+
+        tvTrip.setText("Từ: " + trip.getFrom() +
+                "\nĐến: " + trip.getTo() +
+                "\nNgày: " + trip.getDate() +
+                "\nGiờ: " + trip.getTime());
+
+        tvUser.setText("Tên: " + user.getName() +
+                "\nSĐT: " + user.getPhone());
+
+        dialog.show();
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
     }
 }
 

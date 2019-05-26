@@ -1,5 +1,6 @@
 package com.example.letsgotogetherv2.view;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -7,11 +8,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.letsgotogetherv2.R;
 import com.example.letsgotogetherv2.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +54,7 @@ public class fragment_user extends Fragment {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private  String userID;
     public User user;
+    public FirebaseUser currentUser;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference mRef;
@@ -59,21 +69,21 @@ public class fragment_user extends Fragment {
         tvPhone      = (TextView) view.findViewById(R.id.user_tvPhone);
         tvEmail      = (TextView) view.findViewById(R.id.user_tvEmail);
         tvAddress    = (TextView) view.findViewById(R.id.user_tvAddress);
-        tvManageTrip = (TextView) view.findViewById(R.id.user_tvManage);
+        //tvManageTrip = (TextView) view.findViewById(R.id.user_tvManage);
         tvChangePass = (TextView) view.findViewById(R.id.user_tvChangePassword);
        // tvResponse   = (TextView) view.findViewById(R.id.user_tvResponse);
 
-        //-----------------------------------------------------------------------
+        //--------------------------- Lấy thông tin user --------------------------------------------
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        userID = user.getUid();
+        currentUser = mAuth.getCurrentUser();
+        userID = currentUser.getUid();
 
         mRef  = db.collection("users").document(userID);
         mRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                        User user = documentSnapshot.toObject(User.class);
+                        user = documentSnapshot.toObject(User.class);
 
                         if (user != null) {
                             Log.d("VALUE", "Name: " + user.getName());
@@ -81,7 +91,6 @@ public class fragment_user extends Fragment {
                             Log.d("VALUE", "Phone: " + user.getPhone());
                             Log.d("VALUE", "Address: " + user.getAddress());
                             Log.d("VALUE", "Listsize" + user.getTripArrayList().size());
-
 
                             tvName.setText(user.getName());
                             tvEmail.setText(user.getEmail());
@@ -94,15 +103,24 @@ public class fragment_user extends Fragment {
                     }
                 });
 
-        //-----------------------------------------------------------------------
+        //----------------------- Đổi mật khẩu --------------------------------------
 
+        tvChangePass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogResetPass();
+            }
+        });
+
+
+        //-----------------------------------------------------------------------
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
+
+                if (currentUser != null) {
                     // User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + currentUser.getUid());
 
                 } else {
                     // User is signed out
@@ -113,6 +131,59 @@ public class fragment_user extends Fragment {
         };
 
         return view;
+    }
+
+    public void dialogResetPass(){
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.change_password);
+        dialog.setCanceledOnTouchOutside(false);
+
+        final EditText edtOld       = dialog.findViewById(R.id.change_edtOldPass);
+        final EditText edtNew       = dialog.findViewById(R.id.change_edtNewPass);
+        final EditText edtConfirm   = dialog.findViewById(R.id.change_edtConfirm);
+        Button btnCancel            = dialog.findViewById(R.id.change_btnCancel);
+        Button btnOK                = dialog.findViewById(R.id.change_btnOK);
+
+        dialog.show();
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!edtOld.equals("") && !edtNew.equals("") && !edtConfirm.equals("") && edtNew.getText().toString().equals(edtConfirm.getText().toString())){
+                    AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(),edtConfirm.getText().toString());
+                    currentUser.reauthenticate(credential)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    currentUser.updatePassword(edtConfirm.getText().toString())
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()){
+                                                        Toast.makeText(getContext(), "Đổi mật khẩu thành công!", Toast.LENGTH_SHORT).show();
+                                                        dialog.dismiss();
+                                                    } else {
+                                                        Toast.makeText(getContext(), "Đổi mật khẩu thất bại!", Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                }
+                                            });
+                                }
+                            });
+                } else{
+                    Toast.makeText(getActivity(), "Mật khẩu mới chưa trùng khớp!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
