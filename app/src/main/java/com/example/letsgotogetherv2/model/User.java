@@ -1,11 +1,12 @@
 package com.example.letsgotogetherv2.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Trung Tinh on 4/25/2019.
  */
-public class User {
+public class User implements Serializable {
     private String name, email, phone, address;
     private ArrayList<String> tripArrayList;
 
@@ -58,14 +59,5 @@ public class User {
     public void setTripArrayList(ArrayList<String> tripArrayList) {
         this.tripArrayList = tripArrayList;
     }
-
-    public void bookTrip(String tripID) {
-        this.tripArrayList.add(tripID);
-    }
-
-    public void deleteTrip(String tripID){
-        tripArrayList.remove(tripID);
-    }
-
 }
 

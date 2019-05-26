@@ -3,6 +3,8 @@ package com.example.letsgotogetherv2.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.example.letsgotogetherv2.R;
 import com.example.letsgotogetherv2.model.Trip;
 import com.example.letsgotogetherv2.model.User;
+import com.example.letsgotogetherv2.view.choose_trip_success;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -82,7 +85,12 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
             btnChoose.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    confirmChoose(itemView,getAdapterPosition());
+
+                    if (tripArrayList.get(getAdapterPosition()).getUserID().equals(partnerID)){
+                        Toast.makeText(itemView.getContext(), "Chuyến này do bạn tạo nên không thể chọn!", Toast.LENGTH_SHORT).show();
+                    } else{
+                        confirmChoose(itemView,getAdapterPosition());
+                    }
                 }
             });
 
@@ -102,7 +110,7 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Trip trip = tripArrayList.get(position);
+                final Trip trip = tripArrayList.get(position);
                 trip.setChoose(true);
                 trip.setPartnerID(partnerID);
 
@@ -115,8 +123,6 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
 
                 // 3. Show thông tin người tạo chuyến đi.
                 dialog.cancel();
-                final AlertDialog.Builder alertDialog1 = new AlertDialog.Builder(itemView.getContext());
-                alertDialog1.setTitle("Thông tin đối tác của bạn:");
 
                 db.collection("users").document(trip.getUserID()).get()
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -126,15 +132,21 @@ public class tripAdapter extends RecyclerView.Adapter<tripAdapter.ViewHolder>{
                         User user = documentSnapshot.toObject(User.class);
 
                         if (user != null) {
-                            alertDialog1.setMessage("Tên: " + user.getName() +
-                                    "\nSĐT: " + user.getPhone());
+                            Intent intent = new Intent(itemView.getContext(), choose_trip_success.class);
+
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("trip",trip);
+                            bundle.putSerializable("user",user);
+                            intent.putExtra("data",bundle);
+
+                            itemView.getContext().startActivity(intent);
+
                         } else {
                             Log.d("VALUE", "NULL");
                         }
-
                     }
                 });
-                alertDialog1.show();
+
             }
         });
 

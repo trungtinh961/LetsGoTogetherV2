@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -30,7 +31,7 @@ public class SignIn extends AppCompatActivity {
     TextView tvSignUp;
     Button btnLogin;
     EditText edtpassword, edtuserName;
-    TextView showPass;
+    TextView showPass, resetPass;
     CheckBox cbSave;
     private ActionBar toolbar;
     FirebaseAuth mAuth;
@@ -109,6 +110,24 @@ public class SignIn extends AppCompatActivity {
                 }
             }
         });
+
+        /* ------------------ Quên mật khẩu -------------- */
+        resetPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                auth.sendPasswordResetEmail(edtuserName.getText().toString())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Log.d("RESET","Email sent.");
+                                    Toast.makeText(SignIn.this, "Kiểm tra email của bạn để đặt lại mật khẩu.", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
     }
 
     private void startLogin(String email, String password){
@@ -139,6 +158,7 @@ public class SignIn extends AppCompatActivity {
         edtpassword     = (EditText)    findViewById(R.id.signup_edtPassword);
         edtuserName     = (EditText)    findViewById(R.id.signin_edtUserName);
         showPass        = (TextView)    findViewById(R.id.signin_tvShowPassword);
+        resetPass       = (TextView)    findViewById(R.id.signin_tvForgetPass);
         toolbar         = getSupportActionBar();
         progressDialog  = new ProgressDialog(this);
         mAuth           = FirebaseAuth.getInstance();

@@ -1,9 +1,11 @@
 package com.example.letsgotogetherv2.model;
 
+import java.io.Serializable;
+
 /**
  * Created by Trung Tinh on 4/25/2019.
  */
-public class Trip {
+public class Trip implements Serializable {
     private String userID, partnerID;
     private String tripID;
     private String from, to, date, time;

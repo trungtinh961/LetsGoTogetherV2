@@ -66,7 +66,8 @@ public class fragment_home extends Fragment {
                 for (QueryDocumentSnapshot documentSnapshots: queryDocumentSnapshots){
                     Trip trip = documentSnapshots.toObject(Trip.class);
 
-                    if (trip.getChoose() == false){
+                    if (trip.getChoose() == false)
+                    {
                         arrayList.add(trip);
                     }
                 }
