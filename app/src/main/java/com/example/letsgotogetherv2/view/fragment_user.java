@@ -158,7 +158,7 @@ public class fragment_user extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (!edtOld.equals("") && !edtNew.equals("") && !edtConfirm.equals("") && edtNew.getText().toString().equals(edtConfirm.getText().toString())){
+                if (!edtOld.getText().toString().equals("") && !edtNew.getText().toString().equals("") && !edtConfirm.getText().toString().equals("") && edtNew.getText().toString().equals(edtConfirm.getText().toString())){
                     AuthCredential credential = EmailAuthProvider.getCredential(user.getEmail(),edtConfirm.getText().toString());
                     currentUser.reauthenticate(credential)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
