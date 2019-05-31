@@ -115,17 +115,21 @@ public class SignIn extends AppCompatActivity {
         resetPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth auth = FirebaseAuth.getInstance();
-                auth.sendPasswordResetEmail(edtuserName.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    Log.d("RESET","Email sent.");
-                                    Toast.makeText(SignIn.this, "Kiểm tra email của bạn để đặt lại mật khẩu.", Toast.LENGTH_SHORT).show();
+                if (edtuserName.getText().toString().equals("")) {
+                    Toast.makeText(SignIn.this, "Điền email của bạn vào để nhận mật khẩu mới nhé!", Toast.LENGTH_SHORT).show();
+                } else {
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    auth.sendPasswordResetEmail(edtuserName.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Log.d("RESET","Email sent.");
+                                        Toast.makeText(SignIn.this, "Kiểm tra email của bạn để đặt lại mật khẩu.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
             }
         });
     }
